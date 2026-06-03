@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppHabitsRouteImport } from './routes/_app/habits'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppCalendarRouteImport } from './routes/_app/calendar'
+import { Route as AppAnalyticsRouteImport } from './routes/_app/analytics'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -39,15 +40,22 @@ const AppCalendarRoute = AppCalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analytics': typeof AppAnalyticsRoute
   '/calendar': typeof AppCalendarRoute
   '/dashboard': typeof AppDashboardRoute
   '/habits': typeof AppHabitsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analytics': typeof AppAnalyticsRoute
   '/calendar': typeof AppCalendarRoute
   '/dashboard': typeof AppDashboardRoute
   '/habits': typeof AppHabitsRoute
@@ -56,19 +64,21 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/_app/analytics': typeof AppAnalyticsRoute
   '/_app/calendar': typeof AppCalendarRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/habits': typeof AppHabitsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calendar' | '/dashboard' | '/habits'
+  fullPaths: '/' | '/analytics' | '/calendar' | '/dashboard' | '/habits'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calendar' | '/dashboard' | '/habits'
+  to: '/' | '/analytics' | '/calendar' | '/dashboard' | '/habits'
   id:
     | '__root__'
     | '/'
     | '/_app'
+    | '/_app/analytics'
     | '/_app/calendar'
     | '/_app/dashboard'
     | '/_app/habits'
@@ -116,16 +126,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCalendarRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/analytics': {
+      id: '/_app/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AppAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppAnalyticsRoute: typeof AppAnalyticsRoute
   AppCalendarRoute: typeof AppCalendarRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppHabitsRoute: typeof AppHabitsRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAnalyticsRoute: AppAnalyticsRoute,
   AppCalendarRoute: AppCalendarRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppHabitsRoute: AppHabitsRoute,
