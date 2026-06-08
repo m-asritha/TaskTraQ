@@ -3,13 +3,23 @@
 //   - tanstackStart, viteReact, tailwindcss, tsConfigPaths, nitro (build-only using cloudflare as a default target),
 //     componentTagger (dev-only), VITE_* env injection, @ path alias, React/TanStack dedupe,
 //     error logger plugins, and sandbox detection (port/host/strictPort).
-// You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-// Force-enable the nitro deploy plugin during build (it would otherwise be skipped
-// outside the Lovable sandbox). NITRO_PRESET env var picks the target (e.g. "vercel").
+const isVercel = process.env.VERCEL === "1" || process.env.NITRO_PRESET === "vercel";
+
 export default defineConfig({
-  nitro: true,
+  // Force-enable nitro outside the Lovable sandbox (needed on Vercel CI).
+  nitro: isVercel
+    ? {
+        preset: "vercel",
+        // Vercel expects the Build Output API at .vercel/output
+        output: {
+          dir: ".vercel/output",
+          serverDir: ".vercel/output/functions/__server.func",
+          publicDir: ".vercel/output/static",
+        },
+      }
+    : true,
   tanstackStart: {
     server: { entry: "server" },
   },
