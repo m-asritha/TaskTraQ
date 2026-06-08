@@ -6,10 +6,11 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// Force-enable the nitro deploy plugin during build (it would otherwise be skipped
+// outside the Lovable sandbox). NITRO_PRESET env var picks the target (e.g. "vercel").
 export default defineConfig({
+  nitro: true,
   tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
     server: { entry: "server" },
   },
 });
