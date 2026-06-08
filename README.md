@@ -5,7 +5,6 @@
     <a href="#features">Features</a> ·
     <a href="#tech-stack">Tech Stack</a> ·
     <a href="#getting-started">Getting Started</a> ·
-    <a href="#deployment">Deployment</a> ·
     <a href="#screenshots">Screenshots</a>
   </p>
 </div>
@@ -85,20 +84,6 @@ bun run format    # Run Prettier
 
 ---
 
-## Deployment
-
-TaskTraQ uses a **safe branch-based deployment workflow** with GitHub and Vercel.
-
-| Branch   | Purpose         | Vercel Target  |
-|----------|-----------------|----------------|
-| `main`   | Production      | Live site      |
-| `develop`| Development     | Preview URL    |
-
-All changes made in the Lovable editor are committed to the `develop` branch. When changes are tested and ready, merge `develop` into `main` via a Pull Request. Vercel then deploys `main` to production automatically.
-
-See [`WORKFLOW.md`](WORKFLOW.md) for the full setup guide, including branch protection rules, CI checks, and step-by-step merge instructions.
-
----
 
 ## Project Structure
 
